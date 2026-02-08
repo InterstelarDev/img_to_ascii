@@ -3,7 +3,7 @@
 A Rust CLI tool that converts images to ascii.
 
 ## Features:
-- Fetching mages from a specified directory
+- Fetching images from a specified directory
 - Resizing the image for displaying it in ascii form
 - Turning the image to ascii
 
