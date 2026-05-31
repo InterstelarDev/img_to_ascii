@@ -1,6 +1,5 @@
 use image::GenericImageView;
 use std::env;
-//Im gonna add comments here to remmember what I've learnt 
 fn main() {
     //colects args
     //stroes image path in var file_path
