@@ -1,5 +1,6 @@
 use image::GenericImageView;
 use std::env;
+use terminal_size::{terminal_size, Width};
 fn main() {
     //colects args
     //stroes image path in var file_path
@@ -9,11 +10,15 @@ fn main() {
     let img = image::open(file_path).expect("Error, could not open image");
 
     //creates a tuple of u32 which is width and height
-    //creates new width which is 100
+    //creates new width which is based on terminal size, else set to 180
     //create new height which is h*(n_w/w)*0.5 and sets it to a u32
-    //resizes the image with new width and height, and sets filter to nearest
+    //resizes the image with new width and height, and sets filter to Lanczos3 
     let (width, height) = img.dimensions();
-    let new_width = 180;
+    let new_width = if let Some((Width(w), _)) = terminal_size() {
+        w as u32
+    } else {
+        180 
+    };
     let new_height = (height as f32 *(new_width as f32 / width as f32) * 0.5) as u32;
     let img = img.resize_exact(new_width, new_height, image::imageops::FilterType::Lanczos3);
 
