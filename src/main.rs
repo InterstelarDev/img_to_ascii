@@ -13,9 +13,9 @@ fn main() {
     //create new height which is h*(n_w/w)*0.5 and sets it to a u32
     //resizes the image with new width and height, and sets filter to nearest
     let (width, height) = img.dimensions();
-    let new_width = 100;
+    let new_width = 180;
     let new_height = (height as f32 *(new_width as f32 / width as f32) * 0.5) as u32;
-    let img = img.resize_exact(new_width, new_height, image::imageops::FilterType::Nearest);
+    let img = img.resize_exact(new_width, new_height, image::imageops::FilterType::Lanczos3);
 
     //sets up the ascii character gradient
     let ascii_chars = r#" .'`^",:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"#;
@@ -31,10 +31,10 @@ fn main() {
             let r = pixel[0] as f32;
             let g = pixel[1] as f32;
             let b = pixel[2] as f32;
-            let brightness = (r + g + b) / 3.0;
+            let brightness = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
 
-            //divies the brightness by (255.0 *the length of ascii characters we provided - 1) as u32, and then passes it as usize
-            let char_index = (brightness / 255.0 * (ascii_chars.len() - 1) as f32) as usize;
+            // Divides the brightness by 255.0 and clamps it safely to match character indices
+            let char_index = (brightness / 255.0 * (ascii_chars.len() - 1) as f32).round() as usize;
             
             //prints the ascii character aloong with its color
             let c = ascii_chars.as_bytes()[char_index] as char;
