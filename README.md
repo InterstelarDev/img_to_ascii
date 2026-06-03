@@ -7,4 +7,4 @@ A Rust CLI tool that converts images to ascii.
 - Resizing the image for displaying it in ascii form
 - Turning the image to ascii
 
-**Current Version:** 0.1.1
+**Current Version:** 0.1.2
